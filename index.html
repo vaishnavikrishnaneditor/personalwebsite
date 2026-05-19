@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vaishnavi Krishnan — Editor & Sketch Artist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --ink: #1A1714;
+    --rust: #A63D2F;
+    --gold: #C9A84C;
+    --muted: #7A7268;
+    --border: rgba(26,23,20,0.12);
+    --film-dark: #0D0B09;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Raleway', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── FILM STRIP HEADER ── */
+  .film-strip {
+    width: 100%;
+    height: 18px;
+    background: var(--film-dark);
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .film-strip::before, .film-strip::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 10px;
+    width: 100%;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 12px,
+      var(--cream) 12px,
+      var(--cream) 20px,
+      transparent 20px,
+      transparent 32px
+    );
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--film-dark);
+    padding: 0 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 56px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--cream);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.55);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    background: var(--film-dark);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 5rem 8rem 8rem;
+    position: relative;
+  }
+
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.0;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-desc {
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: rgba(245,240,232,0.55);
+    max-width: 360px;
+    margin-bottom: 3rem;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--film-dark);
+    background: var(--gold);
+    border: none;
+    padding: 0.85rem 2rem;
+    text-decoration: none;
+    transition: opacity 0.25s;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-ghost {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: transparent;
+    border: 1px solid rgba(245,240,232,0.25);
+    padding: 0.85rem 2rem;
+    text-decoration: none;
+    transition: border-color 0.25s;
+    cursor: pointer;
+  }
+
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-right {
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8rem 5rem;
+    position: relative;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    width: 100%;
+    max-width: 380px;
+  }
+
+  .stat-box {
+    background: white;
+    padding: 2rem 1.5rem;
+    border: 1px solid var(--border);
+  }
+
+  .stat-box:nth-child(odd) { background: var(--ink); }
+  .stat-box:nth-child(odd) .stat-num { color: var(--gold); }
+  .stat-box:nth-child(odd) .stat-label { color: rgba(245,240,232,0.5); }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--rust);
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .scroll-indicator span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--muted), transparent);
+    animation: scrollpulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollpulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    padding: 8rem;
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 6rem;
+    align-items: start;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-tag::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .about-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+    position: sticky;
+    top: 7rem;
+  }
+
+  .about-headline em { font-style: italic; color: var(--rust); }
+
+  .about-body p {
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 2;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .about-body p strong {
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .skill-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    border: 1px solid rgba(166,61,47,0.3);
+    padding: 0.4rem 0.85rem;
+  }
+
+  /* ── CREDITS ── */
+  .credits {
+    background: var(--ink);
+    padding: 8rem;
+  }
+
+  .credits-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+  }
+
+  .credits-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 300;
+    color: var(--cream);
+  }
+
+  .credits-grid {
+    display: grid;
+    gap: 2px;
+  }
+
+  .credit-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr 1fr;
+    gap: 2px;
+    transition: transform 0.2s;
+  }
+
+  .credit-row:hover { transform: translateX(6px); }
+
+  .credit-cell {
+    background: rgba(245,240,232,0.04);
+    padding: 1.5rem 2rem;
+    transition: background 0.2s;
+  }
+
+  .credit-row:hover .credit-cell { background: rgba(245,240,232,0.07); }
+
+  .credit-film {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--cream);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .credit-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .credit-director {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: rgba(245,240,232,0.4);
+    align-self: center;
+  }
+
+  .credit-director strong {
+    display: block;
+    color: rgba(245,240,232,0.7);
+    font-weight: 400;
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .credit-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: rgba(245,240,232,0.2);
+    align-self: center;
+    text-align: right;
+  }
+
+  .credit-award {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 0.25rem 0.6rem;
+    margin-top: 0.5rem;
+  }
+
+  /* ── WORK / BEHANCE ── */
+  .work {
+    padding: 8rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .work-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+  }
+
+  .work-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 300;
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .work-card {
+    aspect-ratio: 3/4;
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    border-radius: 2px;
+  }
+
+  .work-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 0.6s ease, opacity 0.3s;
+    opacity: 0.9;
+    image-rendering: auto;
+  }
+
+  .work-card:hover img {
+    transform: scale(1.04);
+    opacity: 0.65;
+  }
+
+  .work-card-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+    background: linear-gradient(to top, rgba(13,11,9,0.9) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .work-card:hover .work-card-overlay { opacity: 1; }
+
+  .work-card-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(to top, rgba(13,11,9,0.8), transparent);
+  }
+
+  .work-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 0.3rem;
+  }
+
+  .work-card-cat {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+  }
+
+  /* ── RECTANGULAR SPLIT INSTAGRAM SECTION ── */
+  .instagram-showcase {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .instagram-split-card {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr; /* Split view: Left Info, Right Image */
+    width: 100%;
+    background: var(--ink); /* Rich dark background card style */
+    border: 1px solid var(--border);
+    text-decoration: none;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+  }
+
+  .instagram-info-block {
+    padding: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .instagram-card-handle {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+
+  .instagram-card-bio {
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.65);
+    margin-bottom: 2.5rem;
+  }
+
+  .instagram-card-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cream);
+    border-bottom: 1px solid rgba(245,240,232,0.2);
+    width: fit-content;
+    padding-bottom: 0.4rem;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .instagram-image-block {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .instagram-image-block img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
+    opacity: 0.9;
+  }
+
+  /* Hover Actions */
+  .instagram-split-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(13,11,9,0.15);
+  }
+
+  .instagram-split-card:hover .instagram-image-block img {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+
+  .instagram-split-card:hover .instagram-card-cta {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  /* ── CONTACT ── */
+  .contact {
+    background: var(--ink);
+    padding: 8rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .contact-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-headline em { font-style: italic; color: var(--gold); }
+
+  .contact-sub {
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: rgba(245,240,232,0.45);
+    margin-bottom: 2.5rem;
+  }
+
+  .social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .social-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(245,240,232,0.08);
+    text-decoration: none;
+    transition: padding-left 0.25s;
+  }
+
+  .social-link:hover { padding-left: 0.5rem; }
+
+  .social-link:first-child { border-top: 1px solid rgba(245,240,232,0.08); }
+
+  .social-link-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: var(--cream);
+    transition: color 0.2s;
+  }
+
+  .social-link:hover .social-link-name { color: var(--gold); }
+
+  .social-link-handle {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: rgba(245,240,232,0.35);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--film-dark);
+    padding: 2rem 8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    color: rgba(245,240,232,0.25);
+    text-transform: uppercase;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 2rem; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 6rem 2.5rem 4rem; }
+    .hero-right { padding: 4rem 2.5rem 6rem; }
+    .about, .credits, .work, .contact { padding: 5rem 2.5rem; }
+    #instagram { padding: 5rem 2.5rem; }
+    .about { grid-template-columns: 1fr; gap: 3rem; }
+    .contact { grid-template-columns: 1fr; gap: 3rem; }
+    .work-grid { grid-template-columns: repeat(2, 1fr); }
+    .credit-row { grid-template-columns: 1fr 1fr; }
+    .credit-cell:nth-child(3), .credit-cell:nth-child(4) { display: none; }
+    .instagram-split-card { grid-template-columns: 1fr; }
+    .instagram-info-block { padding: 2.5rem 2rem; }
+    .instagram-image-block { min-height: 260px; }
+    footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="film-strip"></div>
+
+<nav>
+  <a class="nav-logo" href="#">Vaishnavi Krishnan</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#credits">Credits</a></li>
+    <li><a href="#work">Artwork</a></li>
+    <li><a href="#instagram">Instagram</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Ahmedabad, India · Editor & Artist</p>
+    <h1 class="hero-name">
+      Vaishnavi<br>
+      <em>Krishnan</em>
+    </h1>
+    <p class="hero-desc">
+      Film editor and sketch artist crafting stories through the cut —
+      from National Award-winning shorts to Bollywood and Gujarati features. 
+      FTII-trained. Procreate-fluent. Obsessively visual.
+    </p>
+    <div class="hero-ctas">
+      <a href="#credits" class="btn-primary">View Credits</a>
+      <a href="#work" class="btn-ghost">See Artwork</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-stats">
+      <div class="stat-box">
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Years in Film</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" style="font-size:1rem; line-height:1;">
+          <svg viewBox="0 0 80 80" width="56" height="56" xmlns="http://www.w3.org/2000/svg" style="display:block; margin-bottom:0.3rem;">
+            <circle cx="40" cy="40" r="36" fill="none" stroke="#C9A84C" stroke-width="1.5"/>
+            <g fill="#C9A84C" opacity="0.9">
+              <circle cx="40" cy="40" r="6"/>
+              <ellipse cx="40" cy="24" rx="3.5" ry="8" fill="#C9A84C"/>
+              <ellipse cx="40" cy="56" rx="3.5" ry="8" fill="#C9A84C"/>
+              <ellipse cx="24" cy="40" rx="8" ry="3.5" fill="#C9A84C"/>
+              <ellipse cx="56" cy="40" rx="8" ry="3.5" fill="#C9A84C"/>
+              <ellipse cx="28.7" cy="28.7" rx="3.5" ry="8" transform="rotate(-45 28.7 28.7)" fill="#C9A84C"/>
+              <ellipse cx="51.3" cy="51.3" rx="3.5" ry="8" transform="rotate(-45 51.3 51.3)" fill="#C9A84C"/>
+              <ellipse cx="51.3" cy="28.7" rx="3.5" ry="8" transform="rotate(45 51.3 28.7)" fill="#C9A84C"/>
+              <ellipse cx="28.7" cy="51.3" rx="3.5" ry="8" transform="rotate(45 28.7 51.3)" fill="#C9A84C"/>
+            </g>
+            <circle cx="40" cy="40" r="16" fill="none" stroke="#C9A84C" stroke-width="0.75" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="stat-label">National Award</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">FTII</div>
+        <div class="stat-label">Pune Graduate</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Frames Crafted</div>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div>
+    <div class="section-tag">About</div>
+    <h2 class="about-headline">Where craft<br>meets <em>vision</em></h2>
+  </div>
+  <div class="about-body fade-up">
+    <p>
+      An engineering graduate who chose the edit suite over the office — 
+      <strong>Vaishnavi Krishnan</strong> trained at the prestigious 
+      <strong>Film & Television Institute of India (FTII), Pune</strong>, 
+      specialising in editing. Her FTII graduation film <em>Happy Birthday</em> 
+      (dir. Medhpranav Powar) won the <strong>National Award for Best Film on Family Values</strong>.
+    </p>
+    <p>
+      Her professional journey spans assisting on landmark Bollywood and Gujarati projects — 
+      <strong>Neerja</strong> (Ram Madhvani), <strong>Mom</strong> (Ravi Udyawar), 
+      and <strong>The Illegal</strong> (Danish Renzu) — to her most recent work on 
+      <strong>Dhabkaaro</strong> (2026). Beyond the timeline, 
+      she is an active sketch artist and digital illustrator, with a visual 
+      language rooted in portraiture, travel, and the everyday meal.
+    </p>
+    <p style="color: var(--muted); font-size:0.85rem; font-style:italic; margin-top:1rem;">
+      Available for editing and illustration commissions via Nithos Studios.
+    </p>
+  </div>
+</section>
+
+<section class="credits" id="credits">
+  <div class="credits-header fade-up">
+    <div>
+      <div class="section-tag" style="color: var(--gold);">Filmography</div>
+      <h2 class="credits-title">Selected Credits</h2>
+    </div>
+    <a href="https://www.imdb.com/name/nm9038842/" target="_blank" class="btn-ghost" style="font-size:0.6rem;">
+      Full IMDb ↗
+    </a>
+  </div>
+
+  <div class="credits-grid fade-up">
+
+    <div class="credit-row">
+      <div class="credit-cell">
+        <span class="credit-film">Dhabkaaro</span>
+        <span class="credit-role">Editor</span>
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>Dir. Abhishek</strong>
+        Feature Film · Gujarati
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>Harfanmaula Films</strong>
+        Theatrical
+      </div>
+      <div class="credit-cell" style="text-align:right; padding: 1.5rem 2rem; display:flex; align-items:center; justify-content:flex-end;">
+        <span class="credit-year">2026</span>
+      </div>
+    </div>
+
+    <div class="credit-row">
+      <div class="credit-cell">
+        <span class="credit-film">Vanilla Ice Cream</span>
+        <span class="credit-role">Editor</span>
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>Dir. Preetsinh Gohil</strong>
+        Feature Film · Gujarati
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>Black Horse / Silver Line</strong>
+        Theatrical
+      </div>
+      <div class="credit-cell" style="text-align:right; padding: 1.5rem 2rem; display:flex; align-items:center; justify-content:flex-end;">
+        <span class="credit-year">2024</span>
+      </div>
+    </div>
+
+    <div class="credit-row">
+      <div class="credit-cell">
+        <span class="credit-film">Mister Mummy</span>
+        <span class="credit-role">Editor</span>
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>Dir. Shaad Ali</strong>
+        Feature Film · Hindi
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>T-Series Films</strong>
+        Bollywood
+      </div>
+      <div class="credit-cell" style="text-align:right; padding: 1.5rem 2rem; display:flex; align-items:center; justify-content:flex-end;">
+        <span class="credit-year">2022</span>
+      </div>
+    </div>
+
+    <div class="credit-row">
+      <div class="credit-cell">
+        <span class="credit-film">Karkhanisanchi Waari</span>
+        <span class="credit-role">Associate Editor</span>
+        <div style="margin-top:0.5rem;">
+          <span class="credit-award">★ MaTa Sanmaan — Best Editing</span>
+        </div>
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>Dir. Mangesh Joshi</strong>
+        Feature Film · Marathi
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>SonyLIV</strong>
+        Streaming
+      </div>
+      <div class="credit-cell" style="text-align:right; padding: 1.5rem 2rem; display:flex; align-items:center; justify-content:flex-end;">
+        <span class="credit-year">2021</span>
+      </div>
+    </div>
+
+    <div class="credit-row">
+      <div class="credit-cell">
+        <span class="credit-film">Champaran Mutton</span>
+        <span class="credit-role">Editor (FTII)</span>
+        <div style="margin-top:0.5rem;">
+          <span class="credit-award">★ Oscar Student Academy Award Semi-finalist</span>
+        </div>
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>Dir. Ranjan Kumar</strong>
+        Short Film · FTII
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>FTII Pune</strong>
+        Diploma Film
+      </div>
+      <div class="credit-cell" style="text-align:right; padding: 1.5rem 2rem; display:flex; align-items:center; justify-content:flex-end;">
+        <span class="credit-year">2023</span>
+      </div>
+    </div>
+
+    <div class="credit-row">
+      <div class="credit-cell">
+        <span class="credit-film">Bloody Brothers</span>
+        <span class="credit-role">Associate Editor</span>
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>Applause Entertainment</strong>
+        ZEE5 Series
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>BBC Studios India</strong>
+        Streaming
+      </div>
+      <div class="credit-cell" style="text-align:right; padding: 1.5rem 2rem; display:flex; align-items:center; justify-content:flex-end;">
+        <span class="credit-year">2022</span>
+      </div>
+    </div>
+
+    <div class="credit-row">
+      <div class="credit-cell">
+        <span class="credit-film">Happy Birthday</span>
+        <span class="credit-role">Editor (FTII)</span>
+        <div style="margin-top:0.5rem;">
+          <span class="credit-award">★ National Award — Best Film on Family Values</span>
+        </div>
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>Dir. Medhpranav Powar</strong>
+        Short Film · FTII
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>65th National Film Awards</strong>
+        Award Winner
+      </div>
+      <div class="credit-cell" style="text-align:right; padding: 1.5rem 2rem; display:flex; align-items:center; justify-content:flex-end;">
+        <span class="credit-year">2018</span>
+      </div>
+    </div>
+
+    <div class="credit-row">
+      <div class="credit-cell">
+        <span class="credit-film">Mom</span>
+        <span class="credit-role">Editorial Dept.</span>
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>Dir. Ravi Udyawar</strong>
+        Feature Film · Hindi
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>Sridevi, Nawazuddin</strong>
+        Bollywood
+      </div>
+      <div class="credit-cell" style="text-align:right; padding: 1.5rem 2rem; display:flex; align-items:center; justify-content:flex-end;">
+        <span class="credit-year">2017</span>
+      </div>
+    </div>
+
+    <div class="credit-row">
+      <div class="credit-cell">
+        <span class="credit-film">Neerja</span>
+        <span class="credit-role">Editorial Dept.</span>
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>Dir. Ram Madhvani</strong>
+        Feature Film · Hindi
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>Sonam Kapoor</strong>
+        Bollywood
+      </div>
+      <div class="credit-cell" style="text-align:right; padding: 1.5rem 2rem; display:flex; align-items:center; justify-content:flex-end;">
+        <span class="credit-year">2016</span>
+      </div>
+    </div>
+
+    <div class="credit-row">
+      <div class="credit-cell">
+        <span class="credit-film">The Illegal</span>
+        <span class="credit-role">Editorial Dept.</span>
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>Dir. Danish Renzu</strong>
+        Feature Film
+      </div>
+      <div class="credit-cell credit-director">
+        <strong>International</strong>
+        Drama
+      </div>
+      <div class="credit-cell" style="text-align:right; padding: 1.5rem 2rem; display:flex; align-items:center; justify-content:flex-end;">
+        <span class="credit-year">2016</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="work" id="work">
+  <div class="work-header fade-up">
+    <div>
+      <div class="section-tag">Behance Portfolio</div>
+      <h2 class="work-title">Visual Work</h2>
+    </div>
+    <a href="https://www.behance.net/vkrishnan1df57" target="_blank" class="btn-primary">
+      Full Portfolio ↗
+    </a>
+  </div>
+
+  <div class="work-grid">
+    <a class="work-card" href="https://www.behance.net/gallery/247286211/Meal-series" target="_blank">
+      <img src="https://mir-s3-cdn-cf.behance.net/projects/808/65fc55247286211.Y3JvcCwxNjQwLDEyODIsMCw1MzU.jpg" alt="Meal series" loading="lazy">
+      <div class="work-card-info">
+        <div class="work-card-title">Meal Series</div>
+        <div class="work-card-cat">Illustration · Digital Art</div>
+      </div>
+    </a>
+
+    <a class="work-card" href="https://www.behance.net/gallery/190654123/Vietnam" target="_blank">
+      <img src="https://mir-s3-cdn-cf.behance.net/projects/808/6dbd0e190654123.Y3JvcCwyMTYwLDE2ODksMCw1MDI.jpg" alt="Vietnam" loading="lazy">
+      <div class="work-card-info">
+        <div class="work-card-title">Vietnam</div>
+        <div class="work-card-cat">Travel Sketches · Illustration</div>
+      </div>
+    </a>
+
+    <a class="work-card" href="https://www.behance.net/gallery/99623539/Portraits" target="_blank">
+      <img src="https://mir-s3-cdn-cf.behance.net/projects/808/bc27aa99623539.5f279bc59fc3d.jpg" alt="Portraits" loading="lazy">
+      <div class="work-card-info">
+        <div class="work-card-title">Portraits</div>
+        <div class="work-card-cat">Sketch Art · Pencil</div>
+      </div>
+    </a>
+
+    <a class="work-card" href="https://www.behance.net/gallery/187910361/Digital-Portraits" target="_blank">
+      <img src="https://mir-s3-cdn-cf.behance.net/projects/808/a31bef187910361.Y3JvcCwxMzM0LDEwNDMsNDYsNzU5.jpg" alt="Digital Portraits" loading="lazy">
+      <div class="work-card-info">
+        <div class="work-card-title">Digital Portraits</div>
+        <div class="work-card-cat">Digital Art · Procreate</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section id="instagram" style="padding: 8rem; background: var(--cream); border-top: 1px solid var(--border);">
+  <div class="fade-up" style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:3rem;">
+    <div>
+      <div class="section-tag">Socials</div>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,3vw,3rem); font-weight:300;">Instagram</h2>
+    </div>
+  </div>
+
+  <div class="instagram-showcase fade-up">
+    <a href="https://www.instagram.com/artof_vk" target="_blank" class="instagram-split-card">
+      
+      <div class="instagram-info-block">
+        <span class="instagram-card-handle">@artof_vk</span>
+        <p class="instagram-card-bio">
+          Sketches, portraits, travel illustrations, and visual experiments - updated regularly. Follow for the full creative feed.
+        </p>
+        <span class="instagram-card-cta">View profile on Instagram ↗</span>
+      </div>
+      
+      <div class="instagram-image-block">
+        <img src="vk.jpg" alt="Vaishnavi Krishnan Art Feed" loading="lazy">
+      </div>
+
+    </a>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-left fade-up">
+    <h2 class="contact-headline">Let's shape<br>something <em>together</em></h2>
+    <p class="contact-sub">
+      Whether you are looking to assemble a feature timeline, refine a short, 
+      or collaborate on a visual art series, my door at Nithos Studios is open.
+    </p>
+    <a href="mailto:nithos.studios@gmail.com" class="btn-primary">Send a Message</a>
+  </div>
+
+  <div class="social-links fade-up">
+    <a href="https://www.behance.net/vkrishnan1df57" target="_blank" class="social-link">
+      <span class="social-link-name">Behance</span>
+      <span class="social-link-handle">vkrishnan1df57 ↗</span>
+    </a>
+    <a href="https://www.instagram.com/artof_vk" target="_blank" class="social-link">
+      <span class="social-link-name">Instagram</span>
+      <span class="social-link-handle">@artof_vk ↗</span>
+    </a>
+    <a href="https://www.imdb.com/name/nm9038842/" target="_blank" class="social-link">
+      <span class="social-link-name">IMDb</span>
+      <span class="social-link-handle">nm9038842 ↗</span>
+    </a>
+    <a href="https://www.linkedin.com/in/vk15/" target="_blank" class="social-link">
+      <span class="social-link-name">LinkedIn</span>
+      <span class="social-link-handle">vk15 ↗</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Vaishnavi Krishnan · Nithos Studios — All rights reserved</p>
+  <p>Editor · Sketch Artist · Ahmedabad</p>
+</footer>
+
+<script>
+  const faders = document.querySelectorAll('.fade-up');
+  
+  const appearOptions = {
+    threshold: 0.15,
+    rootMargin: "0px 0px -50px 0px"
+  };
+
+  const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      appearOnScroll.unobserve(entry.target);
+    });
+  }, appearOptions);
+
+  faders.forEach(fader => appearOnScroll.observe(fader));
+</script>
+
+</body>
+</html>
